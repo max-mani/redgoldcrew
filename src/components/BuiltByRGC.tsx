@@ -8,11 +8,8 @@ export default function BuiltByRGC() {
     <section className="w-full bg-navy-dark border-y border-border-red relative z-10 py-20 px-6">
       <div className="max-w-[700px] mx-auto text-center flex flex-col items-center">
         
-        <motion.div 
-          whileHover={{ scale: 1.05 }}
-          className="w-20 h-20 rounded-xl mb-6 flex items-center justify-center relative shadow-[0_0_20px_rgba(196,28,28,0.3)] filter [drop-shadow:0_0_10px_var(--color-red-primary)] bg-navy-darkest overflow-hidden border border-red-primary/30"
-        >
-          <Logo className="w-full h-full object-cover" glow={true} />
+        <motion.div whileHover={{ scale: 1.05 }} className="mb-6">
+          <Logo className="w-20 h-20 rounded-xl" glow={true} />
         </motion.div>
 
         <h2 className="font-bebas text-4xl md:text-[2.5rem] text-white-soft mb-4">

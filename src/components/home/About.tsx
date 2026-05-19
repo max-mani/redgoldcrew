@@ -52,9 +52,10 @@ export default function About() {
                 whileHover={{ scale: 1.04, transition: { type: "spring", stiffness: 300 } }}
                 className="relative z-10"
               >
-                <div className="w-[200px] h-[200px] lg:w-[300px] lg:h-[300px] bg-navy-darkest rounded-2xl flex items-center justify-center border border-border-red/50 shadow-[0_0_30px_rgba(196,28,28,0.3)]">
-                  <Logo className="w-[60%] h-[60%] drop-shadow-[0_0_15px_rgba(196,28,28,0.6)] filter" glow={true} />
-                </div>
+                <Logo
+                  className="w-[200px] h-[200px] lg:w-[300px] lg:h-[300px] rounded-2xl drop-shadow-[0_0_30px_rgba(196,28,28,0.35)]"
+                  glow={true}
+                />
               </motion.div>
             </div>
 

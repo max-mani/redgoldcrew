@@ -38,9 +38,7 @@ export default function Navbar() {
           {/* Left Brand Area */}
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-[28px] h-[28px] flex items-center justify-center relative">
-                 <Logo className="w-full h-full drop-shadow-[0_0_4px_rgba(196,28,28,0.5)] opacity-70 group-hover:opacity-100 transition-opacity" glow={false} />
-              </div>
+              <Logo className="w-[28px] h-[28px] opacity-70 group-hover:opacity-100 transition-opacity" glow={false} />
               <span className="text-gray-mid font-bold tracking-widest uppercase text-sm group-hover:text-white-soft transition-colors hidden sm:block">
                 RedGoldCrew
               </span>

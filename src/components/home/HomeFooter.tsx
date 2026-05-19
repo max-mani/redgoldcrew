@@ -27,9 +27,7 @@ export default function HomeFooter() {
           {/* COL 1 - Brand */}
           <div className="lg:pr-4">
             <Link to="/" className="flex items-center gap-3 mb-5 cursor-pointer group" onClick={scrollToTop}>
-              <div className="w-[38px] h-[38px] flex items-center justify-center relative rounded border border-red-primary shadow-[0_0_10px_rgba(196,28,28,0.5)] bg-navy-darkest overflow-hidden group-hover:border-gold-primary transition-colors">
-                 <Logo className="w-[70%] h-[70%] opacity-90" glow={true} />
-              </div>
+              <Logo className="w-[38px] h-[38px] opacity-90 group-hover:opacity-100 transition-opacity" glow={true} />
               <div className="text-xl font-bold tracking-widest uppercase font-rajdhani">
                 <span className="text-white-soft">RedGold</span>
                 <span className="text-gold-primary">Crew</span>
