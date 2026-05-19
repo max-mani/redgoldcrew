@@ -9,7 +9,7 @@ export default function BuiltByRGC() {
       <div className="max-w-[700px] mx-auto text-center flex flex-col items-center">
         
         <motion.div whileHover={{ scale: 1.05 }} className="mb-6">
-          <Logo className="w-20 h-20 rounded-xl" glow={true} />
+          <Logo size="lg" className="rounded-xl" glow={true} />
         </motion.div>
 
         <h2 className="font-bebas text-4xl md:text-[2.5rem] text-white-soft mb-4">

@@ -40,7 +40,7 @@ export default function HomeNavbar() {
           
           {/* Logo Area */}
           <Link to="/" className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo(0, 0)}>
-            <Logo className="w-[42px] h-[42px]" glow={false} />
+            <Logo size="md" className="w-[42px] h-[42px]" glow={false} />
             <div className="text-2xl font-bold tracking-widest uppercase">
               <span className="text-white-soft">RedGold</span>
               <span className="text-gold-primary">Crew</span>

@@ -34,7 +34,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <Logo className="w-full h-full relative z-10 drop-shadow-[0_0_15px_rgba(196,28,28,0.8)]" glow={true} />
+            <Logo size="xl" className="relative z-10" glow={true} />
             <motion.div 
                initial={{ opacity: 0, scale: 0.5 }}
                animate={{ opacity: 1, scale: 1 }}

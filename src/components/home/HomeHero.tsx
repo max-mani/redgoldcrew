@@ -119,9 +119,9 @@ export default function HomeHero() {
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
             className="relative z-10 w-full max-w-[440px] w-[36vw] flex items-center justify-center"
           >
-            <Logo 
-              className="w-full h-auto rounded-2xl drop-shadow-[0_0_55px_rgba(196,28,28,0.42)] [filter:drop-shadow(0_0_110px_rgba(212,160,23,0.14))]" 
-              glow={true} 
+            <Logo
+              className="w-full max-w-[380px] h-auto rounded-2xl"
+              glow={true}
             />
           </motion.div>
         </div>

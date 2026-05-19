@@ -27,7 +27,7 @@ export default function HomeFooter() {
           {/* COL 1 - Brand */}
           <div className="lg:pr-4">
             <Link to="/" className="flex items-center gap-3 mb-5 cursor-pointer group" onClick={scrollToTop}>
-              <Logo className="w-[38px] h-[38px] opacity-90 group-hover:opacity-100 transition-opacity" glow={true} />
+              <Logo size="md" className="opacity-90 group-hover:opacity-100 transition-opacity" glow={true} />
               <div className="text-xl font-bold tracking-widest uppercase font-rajdhani">
                 <span className="text-white-soft">RedGold</span>
                 <span className="text-gold-primary">Crew</span>
