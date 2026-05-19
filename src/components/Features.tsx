@@ -1,6 +1,7 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
-import { MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
+import { SectionHeader } from './motion/Reveal';
 
 const FeatureCard = ({ icon, title, desc, delay }: any) => {
   const ref = useRef(null);
@@ -20,8 +21,12 @@ const FeatureCard = ({ icon, title, desc, delay }: any) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 44, scale: 0.96, filter: 'blur(8px)' }}
+      animate={
+        isInView
+          ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+          : { opacity: 0, y: 44, scale: 0.96, filter: 'blur(8px)' }
+      }
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -76,20 +81,11 @@ export default function Features() {
   return (
     <section id="features" className="py-24 bg-transparent relative z-10 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-[2px] bg-red-primary" />
-            <span className="font-rajdhani text-gold-primary uppercase tracking-widest font-semibold text-sm">
-              — Core Features —
-            </span>
-          </div>
-          <h2 className="font-bebas text-5xl md:text-6xl text-white-soft mb-4">
-            Everything You Need to Track Your Money
-          </h2>
-          <p className="font-nunito text-gray-mid text-[1.1rem] max-w-2xl leading-relaxed">
-            Six powerful modules built to make personal finance effortless, automatic, and private.
-          </p>
-        </div>
+        <SectionHeader
+          label="— Core Features —"
+          title="Everything You Need to Track Your Money"
+          description="Six powerful modules built to make personal finance effortless, automatic, and private."
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((f, i) => (

@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import Logo from '../Logo';
 import { Link } from 'react-router-dom';
 import { Github } from 'lucide-react';
+import { Reveal } from '../motion/Reveal';
 
 const PhilCard = ({ icon, title, desc, delay }: any) => {
   const ref = useRef(null);
@@ -42,8 +43,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 lg:gap-20 items-start">
           
-          {/* Left Column */}
-          <div className="flex flex-col items-center lg:items-start lg:sticky lg:top-32">
+          <Reveal direction="right" className="flex flex-col items-center lg:items-start lg:sticky lg:top-32">
             <div className="relative">
               {/* Blurred red radial circle */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] bg-red-primary/20 blur-3xl rounded-full z-0 pointer-events-none" />
@@ -73,9 +73,8 @@ export default function About() {
                 </a>
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          {/* Right Column */}
           <div ref={ref}>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}

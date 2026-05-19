@@ -2,6 +2,7 @@ import { ArrowUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
+import { Reveal, RevealItem, RevealStagger } from './motion/Reveal';
 
 export default function Footer() {
   const [showScroll, setShowScroll] = useState(false);
@@ -22,10 +23,8 @@ export default function Footer() {
     <footer className="bg-navy-mid border-t border-border-red relative z-10 font-nunito">
       <div className="max-w-7xl mx-auto px-6 py-16">
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 mb-16">
-          
-          {/* Column 1 - Brand */}
-          <div className="lg:pr-8">
+        <RevealStagger className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 mb-16">
+          <RevealItem className="lg:pr-8">
             <div className="mb-4">
               <span className="font-bebas text-4xl text-gold-primary tracking-wide">AAYIRAM</span>
             </div>
@@ -35,10 +34,9 @@ export default function Footer() {
             <div className="text-gray-mid text-[0.95rem] hover:text-white-soft transition-colors cursor-default">
               📍 Chennai, Tamil Nadu, India
             </div>
-          </div>
+          </RevealItem>
 
-          {/* Column 2 - App Links */}
-          <div>
+          <RevealItem>
             <h4 className="font-rajdhani uppercase text-white-soft font-bold tracking-widest mb-6 border-b border-border-red/50 pb-2 inline-block">App</h4>
             <ul className="flex flex-col gap-3">
               {['Features', 'How It Works', 'Pricing', 'Download'].map((link) => (
@@ -49,10 +47,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </RevealItem>
 
-          {/* Column 3 - Legal */}
-          <div>
+          <RevealItem>
             <h4 className="font-rajdhani uppercase text-white-soft font-bold tracking-widest mb-6 border-b border-border-red/50 pb-2 inline-block">Legal</h4>
             <ul className="flex flex-col gap-3">
               {['Privacy Policy', 'Terms of Use', 'SMS Policy', 'Support'].map((link) => (
@@ -63,17 +60,18 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </RevealItem>
 
-        </div>
+        </RevealStagger>
 
-        {/* Bottom Bar */}
+        <Reveal delay={0.1}>
         <div className="pt-8 border-t border-border-red/50 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-mid/60">
           <div>© {new Date().getFullYear()} Aayiram by RedGoldCrew.</div>
           <div className="flex items-center gap-1 border border-border-red/30 px-3 py-1 rounded-full bg-navy-darkest/30">
             Made with <span className="text-red-primary animate-pulse inline-block mx-1">♥</span> in Chennai, India
           </div>
         </div>
+        </Reveal>
 
       </div>
 

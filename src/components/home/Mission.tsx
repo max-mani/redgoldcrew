@@ -8,8 +8,12 @@ const MissionItem = ({ icon, title, desc, delay }: { icon: string, title: string
   return (
     <motion.div
       ref={ref}
-      initial={{ y: 40, opacity: 0 }}
-      animate={isInView ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
+      initial={{ y: 44, opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
+      animate={
+        isInView
+          ? { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)' }
+          : { y: 44, opacity: 0, scale: 0.96, filter: 'blur(8px)' }
+      }
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
       className="bg-navy-mid border border-border-red rounded-xl p-7 text-center group hover:-translate-y-1 transition-transform duration-300"
     >

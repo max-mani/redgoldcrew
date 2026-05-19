@@ -1,6 +1,7 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 import { Check, X } from 'lucide-react';
+import { Reveal, SectionHeader } from './motion/Reveal';
 
 export default function WhyAayiram() {
   const ref = useRef(null);
@@ -27,23 +28,14 @@ export default function WhyAayiram() {
     <section id="why-aayiram" className="py-24 bg-transparent relative z-10 px-6">
       <div className="max-w-7xl mx-auto" ref={ref}>
         
-        <div className="mb-16">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="font-rajdhani text-gold-primary uppercase tracking-widest font-semibold text-sm">
-              — Why Aayiram —
-            </span>
-          </div>
-          <h2 className="font-bebas text-5xl md:text-6xl text-white-soft mb-4">
-            Built Different. Built Better.
-          </h2>
-          <p className="font-nunito text-gray-mid text-[1.1rem] max-w-2xl leading-relaxed">
-            Traditional expense apps rely on willpower. Aayiram relies on automation.
-          </p>
-        </div>
+        <SectionHeader
+          label="— Why Aayiram —"
+          title="Built Different. Built Better."
+          description="Traditional expense apps rely on willpower. Aayiram relies on automation."
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          
-          {/* Table */}
+          <Reveal direction="left">
           <div className="border border-border-red rounded-xl overflow-hidden bg-navy-dark" style={{ contain: 'paint' }}>
             <div className="grid grid-cols-[3fr_2fr_2fr] border-b border-border-red bg-red-primary/10">
               <div className="p-4 font-rajdhani uppercase text-gray-mid font-bold text-sm tracking-widest">Feature</div>
@@ -76,8 +68,9 @@ export default function WhyAayiram() {
               </motion.div>
             ))}
           </div>
+          </Reveal>
 
-          {/* Differentiators */}
+          <Reveal direction="right" delay={0.1}>
           <div className="flex flex-col gap-4">
             {diffs.map((diff, i) => (
               <motion.div
@@ -96,6 +89,7 @@ export default function WhyAayiram() {
               </motion.div>
             ))}
           </div>
+          </Reveal>
 
         </div>
       </div>

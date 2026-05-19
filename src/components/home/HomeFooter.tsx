@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo';
+import { Reveal, RevealItem, RevealStagger } from '../motion/Reveal';
 
 export default function HomeFooter() {
   const [showScroll, setShowScroll] = useState(false);
@@ -22,10 +23,8 @@ export default function HomeFooter() {
   return (
     <footer className="bg-navy-mid border-t border-border-red relative z-10">
       <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
-          
-          {/* COL 1 - Brand */}
-          <div className="lg:pr-4">
+        <RevealStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+          <RevealItem className="lg:pr-4">
             <Link to="/" className="flex items-center gap-3 mb-5 cursor-pointer group" onClick={scrollToTop}>
               <Logo size="md" className="opacity-90 group-hover:opacity-100 transition-opacity" glow={true} />
               <div className="text-xl font-bold tracking-widest uppercase font-rajdhani">
@@ -49,10 +48,9 @@ export default function HomeFooter() {
             <div className="font-nunito text-gray-mid text-[0.82rem] flex items-center gap-2">
               <span>📍</span> Chennai, Tamil Nadu, India
             </div>
-          </div>
+          </RevealItem>
 
-          {/* COL 2 - Products */}
-          <div>
+          <RevealItem>
             <h4 className="font-rajdhani uppercase text-gold-primary font-bold tracking-widest text-[0.82rem] mb-6">Products</h4>
             <ul className="flex flex-col gap-4">
               <li>
@@ -76,10 +74,9 @@ export default function HomeFooter() {
                 </div>
               </li>
             </ul>
-          </div>
+          </RevealItem>
 
-          {/* COL 3 - Organisation */}
-          <div>
+          <RevealItem>
             <h4 className="font-rajdhani uppercase text-gold-primary font-bold tracking-widest text-[0.82rem] mb-6">Company</h4>
             <ul className="flex flex-col gap-4">
               {['About', 'Team', 'How We Work', 'Values', 'Careers', 'Open Source', 'Contact'].map((link) => (
@@ -90,10 +87,9 @@ export default function HomeFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </RevealItem>
 
-          {/* COL 4 - Legal */}
-          <div>
+          <RevealItem>
              <h4 className="font-rajdhani uppercase text-gold-primary font-bold tracking-widest text-[0.82rem] mb-6">Legal</h4>
              <ul className="flex flex-col gap-4">
               {['Privacy Policy', 'Terms of Use', 'Cookie Policy', 'Security', 'Support'].map((link) => (
@@ -104,10 +100,11 @@ export default function HomeFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </RevealItem>
 
-        </div>
+        </RevealStagger>
 
+        <Reveal delay={0.1}>
         {/* Bottom Bar */}
         <div className="pt-6 mt-8 border-t border-border-red flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="font-nunito text-[0.85rem] text-gray-mid">© {new Date().getFullYear()} RedGoldCrew. All rights reserved.</div>
@@ -116,6 +113,7 @@ export default function HomeFooter() {
           </div>
           <div className="font-nunito text-[0.85rem] text-gray-mid">Made in Chennai, Tamil Nadu</div>
         </div>
+        </Reveal>
       </div>
 
       <AnimatePresence>

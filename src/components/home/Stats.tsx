@@ -1,5 +1,6 @@
 import { useInView } from 'motion/react';
 import { useRef, useEffect, useState } from 'react';
+import { Reveal } from '../motion/Reveal';
 
 const CountUpObj = ({ end, delay = 0 }: { end: number, delay?: number }) => {
   const [count, setCount] = useState(0);
@@ -48,8 +49,10 @@ export default function Stats() {
     <section className="w-full bg-transparent border-y border-border-red relative z-10">
       <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 divide-y-0 divide-x divide-border-red/50 w-full border-b border-border-red/50 lg:border-b-0">
         {stats.map((stat, i) => (
-          <div 
-            key={i} 
+          <Reveal
+            key={i}
+            delay={i * 0.07}
+            direction="up"
             className="group flex flex-col items-center justify-center p-8 border-b lg:border-b-0 border-border-red/50 hover:border-gold-primary transition-colors cursor-default hover:-translate-y-[2px] bg-navy-dark relative"
           >
             <div className="font-bebas text-[3.8rem] leading-none mb-2 bg-gradient-to-br from-red-primary to-gold-primary bg-clip-text text-transparent group-hover:scale-105 transition-transform">
@@ -61,7 +64,7 @@ export default function Stats() {
             <div className="font-nunito text-gray-mid/70 text-[0.8rem] italic text-center leading-tight">
               {stat.sub}
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
