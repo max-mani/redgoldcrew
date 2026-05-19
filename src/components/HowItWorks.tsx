@@ -1,4 +1,4 @@
-import { motion, useInView } from 'motion/react';
+import { motion, useInView, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 import { MessageSquare, ScanLine, Sparkles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -13,80 +13,121 @@ const Step = ({
   num,
   title,
   desc,
-  delay,
   isLast,
 }: {
   num: string;
   title: string;
   desc: string;
-  delay: number;
   isLast?: boolean;
 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, {
+    once: true,
+    amount: 0.55,
+    margin: '0px 0px -15% 0px',
+  });
   const Icon = STEP_ICONS[num] ?? Sparkles;
 
   return (
-    <motion.article
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 32 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
-      className="relative group"
+      className={`relative flex items-center min-h-[52vh] md:min-h-[58vh] ${isLast ? 'pb-8' : ''}`}
     >
-      {/* Connector dot (desktop timeline) */}
+      {/* Timeline node */}
       <motion.div
-        className="hidden md:flex absolute -top-[3.25rem] left-1/2 -translate-x-1/2 z-20 w-4 h-4 rounded-full bg-navy-dark border-2 border-gold-primary shadow-[0_0_12px_rgba(212,160,23,0.5)] group-hover:scale-125 group-hover:border-red-primary transition-all duration-300"
-        initial={{ scale: 0 }}
-        animate={isInView ? { scale: 1 } : { scale: 0 }}
-        transition={{ delay: delay + 0.15, type: 'spring', stiffness: 260 }}
-      />
+        className="absolute left-0 md:left-1 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 rounded-full bg-navy-dark border-2 border-gold-primary flex items-center justify-center font-rajdhani font-bold text-sm text-gold-primary shadow-[0_0_16px_rgba(212,160,23,0.45)]"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 320, damping: 22, delay: 0.05 }}
+      >
+        {num}
+      </motion.div>
 
-      <div className="relative h-full bg-navy-mid/90 border border-border-red rounded-[14px] p-7 sm:p-8 overflow-hidden backdrop-blur-sm hover:-translate-y-1.5 hover:border-red-primary/45 hover:shadow-[0_16px_48px_rgba(196,28,28,0.14)] transition-all duration-300">
-        <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-red-primary via-red-bright to-gold-primary opacity-70 group-hover:opacity-100 transition-opacity" />
+      <motion.article
+        initial={{ opacity: 0, y: 56, scale: 0.94, filter: 'blur(6px)' }}
+        animate={
+          isInView
+            ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+            : { opacity: 0, y: 56, scale: 0.94, filter: 'blur(6px)' }
+        }
+        transition={{
+          duration: 0.65,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="group relative ml-14 md:ml-20 w-full"
+      >
+        <div className="relative bg-navy-mid/90 border border-border-red rounded-[14px] p-7 sm:p-9 overflow-hidden backdrop-blur-sm hover:border-red-primary/45 hover:shadow-[0_20px_50px_rgba(196,28,28,0.16)] transition-shadow duration-300">
+          <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-red-primary via-red-bright to-gold-primary opacity-70 group-hover:opacity-100 transition-opacity" />
 
-        <div className="absolute -right-1 -top-3 font-bebas text-[4.5rem] leading-none text-red-primary/[0.06] group-hover:text-red-primary/[0.1] transition-colors select-none pointer-events-none">
-          {num}
-        </div>
-
-        <div className="relative flex flex-col items-center text-center md:items-start md:text-left">
-          <motion.div className="flex items-center gap-3 mb-5 w-full justify-center md:justify-start">
-            <span className="font-rajdhani text-[0.7rem] uppercase tracking-[0.2em] text-gold-primary font-bold px-2.5 py-1 rounded-md border border-border-gold bg-gold-primary/5">
-              Step {num}
-            </span>
+          <motion.div
+            className="absolute -right-1 -top-3 font-bebas text-[4.5rem] leading-none text-red-primary/[0.06] select-none pointer-events-none"
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            {num}
           </motion.div>
 
-          <div className="w-14 h-14 rounded-xl bg-navy-dark border border-red-primary/50 flex items-center justify-center text-gold-primary mb-5 shadow-[inset_0_0_24px_rgba(196,28,28,0.12)] group-hover:border-gold-primary/60 group-hover:shadow-[0_0_24px_rgba(212,160,23,0.15)] transition-all duration-300">
-            <Icon size={26} strokeWidth={1.75} className="text-red-bright group-hover:text-gold-primary transition-colors" />
+          <div className="relative flex flex-col md:flex-row md:items-start gap-6">
+            <motion.div
+              className="shrink-0 w-14 h-14 rounded-xl bg-navy-dark border border-red-primary/50 flex items-center justify-center shadow-[inset_0_0_24px_rgba(196,28,28,0.12)]"
+              initial={{ rotate: -8, scale: 0.8 }}
+              animate={isInView ? { rotate: 0, scale: 1 } : { rotate: -8, scale: 0.8 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 18, delay: 0.12 }}
+            >
+              <Icon
+                size={26}
+                strokeWidth={1.75}
+                className="text-red-bright group-hover:text-gold-primary transition-colors"
+              />
+            </motion.div>
+
+            <div>
+              <motion.span
+                className="inline-block font-rajdhani text-[0.7rem] uppercase tracking-[0.2em] text-gold-primary font-bold px-2.5 py-1 rounded-md border border-border-gold bg-gold-primary/5 mb-4"
+                initial={{ opacity: 0, x: -12 }}
+                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
+                transition={{ delay: 0.18, duration: 0.45 }}
+              >
+                Step {num}
+              </motion.span>
+
+              <motion.h3
+                className="font-rajdhani uppercase font-bold text-white-soft text-2xl sm:text-[1.6rem] tracking-wide mb-3"
+                initial={{ opacity: 0, y: 12 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                transition={{ delay: 0.22, duration: 0.45 }}
+              >
+                {title}
+              </motion.h3>
+
+              <motion.p
+                className="font-nunito text-gray-mid text-[0.95rem] sm:text-[1rem] leading-[1.75] max-w-xl"
+                initial={{ opacity: 0, y: 12 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                transition={{ delay: 0.28, duration: 0.45 }}
+              >
+                {desc}
+              </motion.p>
+            </div>
           </div>
-
-          <h3 className="font-rajdhani uppercase font-bold text-white-soft text-xl sm:text-[1.35rem] tracking-wide mb-3">
-            {title}
-          </h3>
-          <p className="font-nunito text-gray-mid text-[0.92rem] sm:text-[0.95rem] leading-[1.7] max-w-sm mx-auto md:mx-0">
-            {desc}
-          </p>
         </div>
-      </div>
-
-      {/* Mobile vertical connector */}
-      {!isLast && (
-        <div className="md:hidden flex justify-center py-4">
-          <motion.div
-            className="w-px h-8 bg-gradient-to-b from-red-primary/60 to-gold-primary/40 origin-top"
-            initial={{ scaleY: 0 }}
-            animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-            transition={{ delay: delay + 0.2, duration: 0.4 }}
-          />
-        </div>
-      )}
-    </motion.article>
+      </motion.article>
+    </div>
   );
 };
 
 export default function HowItWorks() {
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-100px' });
+  const headerRef = useRef(null);
+  const stepsContainerRef = useRef(null);
+  const headerInView = useInView(headerRef, { once: true, margin: '-80px' });
+
+  const { scrollYProgress } = useScroll({
+    target: stepsContainerRef,
+    offset: ['start 0.85', 'end 0.5'],
+  });
+
+  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const steps = [
     {
@@ -110,15 +151,14 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       className="py-24 bg-navy-dark relative z-10 px-6 overflow-hidden border-y border-border-red/40"
-      ref={containerRef}
     >
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(80vw,600px)] h-[300px] bg-red-primary/5 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto relative">
-        <div className="mb-16 md:mb-20">
+      <div className="max-w-3xl mx-auto relative">
+        <div className="mb-12 md:mb-16" ref={headerRef}>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             className="flex items-center gap-2 mb-4"
           >
             <span className="font-rajdhani text-gold-primary uppercase tracking-widest font-semibold text-sm">
@@ -127,7 +167,7 @@ export default function HowItWorks() {
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             transition={{ delay: 0.08 }}
             className="font-bebas text-5xl md:text-6xl text-white-soft mb-4"
           >
@@ -136,30 +176,25 @@ export default function HowItWorks() {
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             transition={{ delay: 0.16 }}
             className="font-nunito text-gray-mid text-[1.05rem] max-w-2xl leading-relaxed"
           >
-            No tutorials. No manual entry. Just open the app and Aayiram does the rest.
+            No tutorials. No manual entry. Scroll to see how Aayiram works — one step at a time.
           </motion.p>
         </div>
 
-        <div className="relative md:pt-14">
-          {/* Desktop timeline */}
-          <div className="hidden md:block absolute top-[1.35rem] left-[12%] right-[12%] h-[2px] z-0 overflow-hidden rounded-full bg-navy-mid">
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-              className="h-full origin-left bg-gradient-to-r from-red-primary via-red-bright to-gold-primary"
-            />
-          </div>
+        <div ref={stepsContainerRef} className="relative pl-2 md:pl-4">
+          {/* Vertical progress line */}
+          <motion.div
+            className="absolute left-[19px] md:left-[23px] top-8 bottom-8 w-[2px] origin-top bg-gradient-to-b from-red-primary via-red-bright to-gold-primary rounded-full"
+            style={{ scaleY: lineScale }}
+          />
+          <div className="absolute left-[19px] md:left-[23px] top-8 bottom-8 w-[2px] bg-navy-mid rounded-full" />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 lg:gap-8">
-            {steps.map((s, i) => (
-              <Step key={s.num} {...s} delay={0.2 + i * 0.12} isLast={i === steps.length - 1} />
-            ))}
-          </div>
+          {steps.map((s, i) => (
+            <Step key={s.num} {...s} isLast={i === steps.length - 1} />
+          ))}
         </div>
       </div>
     </section>
