@@ -56,24 +56,16 @@ export default function Contact() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const name = String(formData.get('name') ?? '').trim();
-    const email = String(formData.get('email') ?? '').trim();
-    const message = String(formData.get('message') ?? '').trim();
+    formData.set('subject', `RedGoldCrew — message from ${name || 'website visitor'}`);
 
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+      // Same-origin POST — Netlify Forms (no third-party CORS).
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          _subject: `RedGoldCrew — message from ${name}`,
-          _replyto: email,
-          _template: 'table',
-        }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(
+          Object.fromEntries(formData.entries()) as Record<string, string>,
+        ).toString(),
       });
 
       if (!response.ok) {
@@ -85,7 +77,9 @@ export default function Contact() {
       setTimeout(() => setFormState('idle'), 8000);
     } catch {
       setFormState('error');
-      setErrorMessage('Could not send your message. Please email us directly at redgoldcrew@gmail.com');
+      setErrorMessage(
+        `Could not send your message. Please email us directly at ${CONTACT_EMAIL}`,
+      );
     }
   };
 
@@ -201,7 +195,21 @@ export default function Contact() {
                 </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="relative flex flex-col gap-5">
+              <form
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
+                className="relative flex flex-col gap-5"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                <p className="hidden" aria-hidden="true">
+                  <label>
+                    Don&apos;t fill this out:{' '}
+                    <input name="bot-field" tabIndex={-1} autoComplete="off" />
+                  </label>
+                </p>
                 {formState === 'error' && (
                   <div className="flex items-start gap-3 rounded-lg border border-red-primary/50 bg-red-primary/10 px-4 py-3 text-sm font-nunito text-white-soft">
                     <AlertCircle size={18} className="text-red-bright shrink-0 mt-0.5" />
